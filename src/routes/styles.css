@@ -135,7 +135,6 @@
     background-color: #b1d9fb;
     text-align: center;
     padding: 1.6rem;
-    cursor: pointer;
 
     &.today {
       flex-direction: row;
@@ -257,6 +256,7 @@
         border: none;
         transition: transform 0.5s;
         transform: rotate(90deg);
+        cursor: pointer;
 
         &.expanded {
           transform: rotate(-90deg) translateY(-3px);
