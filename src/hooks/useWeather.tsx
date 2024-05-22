@@ -20,7 +20,7 @@ export async function useWeather(
       weatherToday: {},
     };
 
-    if (/,\s/.test(query) && query.length < 4) {
+    if (/,\s/.test(query) || query.length < 4) {
       throw new Error(`Please enter the city name (only) or a zip code.`);
     }
 
