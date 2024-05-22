@@ -148,7 +148,7 @@ export default component$(() => {
       <div class="inner">
         <h1>Check the Weather</h1>
       </div>
-      <form class="inner">
+      <form class="inner" preventdefault:submit>
         <Input />
         <Resource
           onPending={() => <Loader />}
