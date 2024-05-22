@@ -11,7 +11,7 @@ import {
 import type {DocumentHead} from '@builder.io/qwik-city';
 
 import {Alert} from '~/components/alert/alert';
-import {Error} from '~/components/error';
+import {ErrorMessage} from '~/components/error-message';
 import {Loader} from '~/components/loader';
 import {Input} from '~/components/input';
 import {WeatherLayout} from '~/components/weather-layout';
@@ -37,14 +37,7 @@ export interface SuccessResponse {
   weatherToday: WeatherTodayType;
 }
 
-export interface ErrorResponse {
-  error: {
-    name: string;
-    message: string;
-  };
-}
-
-export type WeatherResource = SuccessResponse | ErrorResponse | undefined;
+export type WeatherResource = SuccessResponse | Error | undefined;
 
 export default component$(() => {
   const weatherContextObj = useStore({
@@ -94,7 +87,9 @@ export default component$(() => {
         <button type="submit">Check Weather</button>
         <Resource
           onPending={() => <Loader />}
-          onRejected={(reason) => <Error message={reason.message} />}
+          onRejected={(weatherResource) => (
+            <ErrorMessage message={weatherResource.message} />
+          )}
           onResolved={(weatherResource) => {
             console.log('weatherResource', weatherResource);
             (weatherContextObj as WeatherContextType).displayLocation = (
