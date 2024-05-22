@@ -53,7 +53,8 @@ export default component$(() => {
   useContextProvider(WeatherContext, weatherContextObj);
 
   const portal = useContext(PortalAPI);
-  const openModal = $(() =>
+  const openModal = $(() => {
+    document.body.classList.add('lock');
     portal(
       'modal',
       <Alert
@@ -64,8 +65,8 @@ export default component$(() => {
           <p><a href="/apps">More apps</a></p>
         `}
       />
-    )
-  );
+    );
+  });
 
   const weatherResource = useResource$<WeatherResource>(({track, cleanup}) => {
     track(() => weatherContextObj.query);

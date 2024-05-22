@@ -9,19 +9,27 @@ export interface AlertProps {
 // This component is shown as a modal.
 export const Alert = component$((props: AlertProps) => {
   useStylesScoped$(AlertCSS);
+
   // To close a portal retrieve the close API.
   const portalClose = useContext(PortalCloseAPIContextId);
+
   return (
     <div
       id="alertOverlay"
       onClick$={(event) => {
         const alertContent = document.querySelector('#alertContent');
         if (!alertContent?.contains(event.target as Element)) {
+          document.body.classList.remove('lock');
           portalClose();
         }
       }}>
       <div id="alertContent">
-        <button class="alertClose" onClick$={() => portalClose()}>
+        <button
+          class="alertClose"
+          onClick$={() => {
+            document.body.classList.remove('lock');
+            portalClose();
+          }}>
           &#x2715;
         </button>
         <div dangerouslySetInnerHTML={props.content}></div>

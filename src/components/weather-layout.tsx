@@ -1,4 +1,4 @@
-import {component$, Fragment, useContext} from '@builder.io/qwik';
+import {$, component$, Fragment, useContext} from '@builder.io/qwik';
 
 import {WeatherContext} from '~/routes';
 
@@ -136,12 +136,12 @@ export const Day = component$(
             </p>
             <p id="expandHourlyBtn">
               <button
-                onClick$={() => {
+                onClick$={$(() => {
                   const pHourly = document.querySelector('#todayHourly');
                   const expandBtn = document.querySelector('#expandHourlyBtn');
                   pHourly?.classList.toggle('expanded');
                   expandBtn?.classList.toggle('expanded');
-                }}>
+                })}>
                 &#10095;
               </button>
             </p>
