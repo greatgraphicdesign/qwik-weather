@@ -100,7 +100,6 @@ export const Day = component$(
           return hr.meridiem.length ? hr : false;
         })
         .filter((hr) => hr !== false) as hr[] | [];
-      console.log('hours', hours);
     }
 
     return (
