@@ -13,7 +13,7 @@ export const Input = component$(() => {
         onInput$={(e) =>
           (weatherContextObj.query = (e.target as HTMLInputElement).value)
         }
-        // placeholder={isLoading ? 'Loading...' : 'City or Zip Code'}
+        placeholder="City or Zip Code"
         value={weatherContextObj.query}
       />
     </>

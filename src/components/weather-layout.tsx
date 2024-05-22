@@ -1,4 +1,4 @@
-import {component$, Fragment, useContext, useSignal} from '@builder.io/qwik';
+import {component$, Fragment, useContext} from '@builder.io/qwik';
 
 import {WeatherContext} from '~/routes';
 

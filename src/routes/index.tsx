@@ -7,6 +7,7 @@ import {
   useContextProvider,
   useResource$,
   useStore,
+  useVisibleTask$,
 } from '@builder.io/qwik';
 import type {DocumentHead} from '@builder.io/qwik-city';
 
@@ -15,7 +16,9 @@ import {ErrorMessage} from '~/components/error-message';
 import {Loader} from '~/components/loader';
 import {Input} from '~/components/input';
 import {WeatherLayout} from '~/components/weather-layout';
+
 import {useWeather} from '~/hooks/useWeather';
+
 import {PortalAPI} from '~/portal-provider';
 
 import type {WeatherForecastType, WeatherTodayType} from '~/types/apis';
@@ -73,6 +76,68 @@ export default component$(() => {
     return useWeather(weatherContextObj.query, abortController);
   });
 
+  // On initial load, use localStorage if it exists
+  useVisibleTask$(() => {
+    let stored = localStorage.getItem('weatherLocation');
+
+    if (
+      stored &&
+      JSON.parse(stored).length &&
+      JSON.parse(stored) !== weatherContextObj.query
+    ) {
+      weatherContextObj.query = JSON.parse(stored) as string;
+    } else {
+      weatherContextObj.query = 'Bellingham';
+    }
+  });
+
+  // On query change, overwrite localStorage, only if doesn't match existing
+  useVisibleTask$(({track}) => {
+    track(() => weatherContextObj.query);
+
+    let stored = localStorage.getItem('weatherLocation');
+
+    if (
+      (stored &&
+        JSON.parse(stored).length &&
+        JSON.parse(stored) !== weatherContextObj.query) ||
+      !(stored && JSON.parse(stored).length)
+    ) {
+      localStorage.setItem(
+        'weatherLocation',
+        JSON.stringify(weatherContextObj.query)
+      );
+    }
+  });
+
+  // mark current hour and scroll it into view
+  useVisibleTask$(({track}) => {
+    track(() => weatherContextObj.weatherToday);
+
+    if (weatherContextObj.weatherToday) {
+      const today = weatherContextObj.weatherToday as WeatherTodayType;
+
+      const dateNow = new Date().toLocaleTimeString('en', {
+        timeStyle: 'short',
+        hour12: false,
+        timeZone: today.timezone,
+      });
+      const dateNowArr = dateNow.split(':');
+      const spanHourMatch = document.querySelector(`#i${dateNowArr[0]}`);
+      if (spanHourMatch) {
+        spanHourMatch.classList.add('current');
+        const spanHourMatchNext = spanHourMatch.nextElementSibling;
+        if (spanHourMatchNext instanceof HTMLSpanElement) {
+          spanHourMatchNext.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+            inline: 'start',
+          });
+        }
+      }
+    }
+  });
+
   return (
     <div class="weather-app">
       <button class="about-btn" onClick$={openModal}>
@@ -84,7 +149,6 @@ export default component$(() => {
       </div>
       <form class="inner">
         <Input />
-        <button type="submit">Check Weather</button>
         <Resource
           onPending={() => <Loader />}
           onRejected={(weatherResource) => (
@@ -106,7 +170,6 @@ export default component$(() => {
           value={weatherResource}
         />
       </form>
-      {/* {weatherContextObj.query} */}
     </div>
   );
 });
