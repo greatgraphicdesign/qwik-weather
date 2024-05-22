@@ -1,4 +1,4 @@
-import {component$, Fragment, useContext} from '@builder.io/qwik';
+import {component$, Fragment, useContext, useSignal} from '@builder.io/qwik';
 
 import {WeatherContext} from '~/routes';
 
@@ -10,8 +10,7 @@ export const WeatherLayout = component$(() => {
 
   if (!weatherContextObj.forecast || !weatherContextObj.weatherToday) return;
 
-  const {displayLocation, expandHourly, forecast, weatherToday} =
-    weatherContextObj;
+  const {displayLocation, forecast, weatherToday} = weatherContextObj;
 
   const {
     temperature_2m_max: maxArr,
@@ -26,7 +25,6 @@ export const WeatherLayout = component$(() => {
       <Day
         code={codesArr[0]}
         date={datesArr[0]}
-        expandHourly={expandHourly}
         isToday={true}
         key={datesArr[0]}
         max={maxArr[0]}
@@ -41,7 +39,6 @@ export const WeatherLayout = component$(() => {
               <Day
                 code={codesArr[i]}
                 date={date}
-                expandHourly={expandHourly}
                 isToday={false}
                 key={date}
                 max={maxArr[i]}
@@ -59,7 +56,6 @@ export const Day = component$(
   ({
     code,
     date,
-    expandHourly,
     isToday,
     max,
     min,
@@ -67,14 +63,11 @@ export const Day = component$(
   }: {
     code: number;
     date: string;
-    expandHourly: boolean;
     isToday: boolean;
     max: number;
     min: number;
     weatherToday: WeatherTodayType;
   }) => {
-    const weatherContextObj = useContext(WeatherContext) as WeatherContextType;
-
     interface hr {
       code: number;
       index: number;
@@ -125,7 +118,7 @@ export const Day = component$(
         </p>
         {isToday && hours.length ? (
           <>
-            <p class={`today-hourly${expandHourly ? ' expanded' : ''}`}>
+            <p id="todayHourly">
               {hours.map((hour) => (
                 <Fragment key={hour.index}>
                   <span
@@ -141,12 +134,14 @@ export const Day = component$(
                 </Fragment>
               ))}
             </p>
-            <p class="expand-hourly-btn">
+            <p id="expandHourlyBtn">
               <button
-                class={`link-btn${expandHourly ? ' expanded' : ''}`}
-                onClick$={(expandHourly) =>
-                  (weatherContextObj.expandHourly = !expandHourly)
-                }>
+                onClick$={() => {
+                  const pHourly = document.querySelector('#todayHourly');
+                  const expandBtn = document.querySelector('#expandHourlyBtn');
+                  pHourly?.classList.toggle('expanded');
+                  expandBtn?.classList.toggle('expanded');
+                }}>
                 &#10095;
               </button>
             </p>

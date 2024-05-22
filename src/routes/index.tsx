@@ -14,7 +14,7 @@ import {Alert} from '~/components/alert/alert';
 import {Error} from '~/components/error';
 import {Loader} from '~/components/loader';
 import {Input} from '~/components/input';
-import {WeatherLayout} from '~/components/weather';
+import {WeatherLayout} from '~/components/weather-layout';
 import {useWeather} from '~/hooks/useWeather';
 import {PortalAPI} from '~/portal-provider';
 
@@ -22,7 +22,6 @@ import type {WeatherForecastType, WeatherTodayType} from '~/types/apis';
 
 export type WeatherContextType = {
   displayLocation: string;
-  expandHourly: boolean;
   error: string;
   forecast: WeatherForecastType['daily'] | null;
   query: string;
@@ -50,7 +49,6 @@ export type WeatherResource = SuccessResponse | ErrorResponse | undefined;
 export default component$(() => {
   const weatherContextObj = useStore({
     displayLocation: '',
-    expandHourly: false,
     error: '',
     forecast: null,
     query: '',
@@ -113,7 +111,7 @@ export default component$(() => {
           value={weatherResource}
         />
       </form>
-      {weatherContextObj.query}
+      {/* {weatherContextObj.query} */}
     </div>
   );
 });

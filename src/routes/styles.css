@@ -170,10 +170,10 @@
     }
 
     & .today-title,
-    & .today-hourly {
+    & #todayHourly {
       flex-basis: 100%;
     }
-    & .today-hourly {
+    & #todayHourly {
       background-color: #9bd1ff;
       height: 16rem;
       margin-top: 1rem;
@@ -239,14 +239,14 @@
       font-size: 1.6rem;
     }
 
-    & .expand-hourly-btn {
+    & #expandHourlyBtn {
       position: absolute;
       bottom: 0.25rem;
       right: 1.6rem;
       margin: 0;
       padding: 0;
 
-      & .link-btn {
+      & button {
         background: transparent;
         color: #1592ff;
         font-size: 2.6rem;
