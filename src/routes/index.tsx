@@ -156,8 +156,7 @@ export default component$(() => {
             <ErrorMessage message={weatherResource.message} />
           )}
           onResolved={(weatherResource) => {
-            console.log('weatherResource', weatherResource);
-            (weatherContextObj as WeatherContextType).displayLocation = (
+            weatherContextObj.displayLocation = (
               weatherResource as SuccessResponse
             ).displayLocation;
             (weatherContextObj as WeatherContextType).forecast = (

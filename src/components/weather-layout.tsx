@@ -91,7 +91,6 @@ export const Day = component$(
           hr.time = new Date(hour).toLocaleTimeString('en', {
             timeStyle: 'short',
             hour12: true,
-            timeZone: weatherToday.timezone,
           });
           hr.meridiem = /AM/i.test(hr.time) ? 'AM' : 'PM';
           hr.time = hr.time.replace(/\s(AM|PM)/, '');
@@ -101,6 +100,7 @@ export const Day = component$(
           return hr.meridiem.length ? hr : false;
         })
         .filter((hr) => hr !== false) as hr[] | [];
+      console.log('hours', hours);
     }
 
     return (
