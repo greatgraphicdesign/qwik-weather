@@ -17,7 +17,7 @@ import {Loader} from '~/components/loader';
 import {Input} from '~/components/input';
 import {WeatherLayout} from '~/components/weather-layout';
 
-import {useWeather} from '~/hooks/useWeather';
+import {getWeather} from '~/hooks/getWeather';
 
 import {PortalAPI} from '~/portal-provider';
 
@@ -74,12 +74,13 @@ export default component$(() => {
     const abortController = new AbortController();
     cleanup(() => abortController.abort('cleanup'));
 
-    return useWeather(weatherContextObj.query, abortController);
+    return getWeather(weatherContextObj.query, abortController);
   });
 
   // On initial load, use localStorage if it exists
+  // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(() => {
-    let stored = localStorage.getItem('weatherLocation');
+    const stored = localStorage.getItem('weatherLocation');
 
     if (
       stored &&
@@ -93,25 +94,35 @@ export default component$(() => {
   });
 
   // On query change, overwrite localStorage, only if doesn't match existing
+  // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({track}) => {
     track(() => weatherContextObj.query);
 
-    let stored = localStorage.getItem('weatherLocation');
+    const stored = localStorage.getItem('weatherLocation');
 
     if (
       (stored &&
         JSON.parse(stored).length &&
-        JSON.parse(stored) !== weatherContextObj.query) ||
+        JSON.parse(stored) !== weatherContextObj.query &&
+        weatherContextObj.query.length) ||
       !(stored && JSON.parse(stored).length)
     ) {
       localStorage.setItem(
         'weatherLocation',
         JSON.stringify(weatherContextObj.query)
       );
+    } else if (
+      stored &&
+      JSON.parse(stored).length &&
+      JSON.parse(stored) !== weatherContextObj.query &&
+      !weatherContextObj.query.length
+    ) {
+      localStorage.removeItem('weatherLocation');
     }
   });
 
   // mark current hour and scroll it into view
+  // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({track}) => {
     track(() => weatherContextObj.weatherToday);
 

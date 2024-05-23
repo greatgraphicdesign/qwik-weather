@@ -42,11 +42,6 @@ export default component$(() => {
           href="/assets/icons/favicon-16x16.png"
         />
         <link rel="manifest" href="/assets/icons/site.webmanifest" />
-        <link
-          rel="mask-icon"
-          href="/assets/icons/safari-pinned-tab.svg"
-          color="#000000"
-        />
         <meta name="msapplication-TileColor" content="#fbf3e5" />
         <meta
           name="msapplication-config"

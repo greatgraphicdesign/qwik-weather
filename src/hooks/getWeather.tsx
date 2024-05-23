@@ -1,7 +1,7 @@
 import type {GeocodingObjType} from '~/types/apis';
 import type {SuccessResponse, WeatherResource} from '~/routes';
 
-export async function useWeather(
+export async function getWeather(
   query: string,
   controller: AbortController
 ): Promise<WeatherResource> {
