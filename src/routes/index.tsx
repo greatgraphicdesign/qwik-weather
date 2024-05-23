@@ -62,7 +62,7 @@ export default component$(() => {
           <p>This is an enhanced version of the Classy Weather project in Jonas Schmedtmann’s Ultimate React Course, converted to the Qwik framework. It is offered without warrants or represents.</p>
           <p>The data you enter is stored on this device using your browser’s built-in storage. This can be emptied by clearing your browser data. The app tracks nothing.</p>
           <p>Weather data courtesy of open-meteo.com. Enjoy!</p>
-          <p><a href="/apps">More apps</a></p>
+          <p><a href="https://codesynopsis.com/apps">More apps</a></p>
         `}
       />
     );
