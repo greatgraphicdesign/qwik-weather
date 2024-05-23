@@ -1,0 +1,20 @@
+{
+    "name": "Code Synopsis",
+    "short_name": "Code Synopsis",
+    "icons": [
+        {
+            "src": "/assets/icons/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/assets/icons/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#fbf3e5",
+    "background_color": "#fbf3e5",
+    "display": "standalone",
+    "start_url": "https://codesynopsis.com"
+}
