@@ -68,14 +68,25 @@ export default component$(() => {
     );
   });
 
-  const weatherResource = useResource$<WeatherResource>(({track, cleanup}) => {
-    track(() => weatherContextObj.query);
+  const weatherResource = useResource$<WeatherResource>(
+    async ({track, cleanup}) => {
+      track(() => weatherContextObj.query);
 
-    const abortController = new AbortController();
-    cleanup(() => abortController.abort('cleanup'));
+      const abortController = new AbortController();
+      cleanup(() => abortController.abort('cleanup'));
 
-    return getWeather(weatherContextObj.query, abortController);
-  });
+      const data = await getWeather(weatherContextObj.query, abortController);
+
+      if (data && 'displayLocation' in data) {
+        weatherContextObj.displayLocation = data.displayLocation;
+        (weatherContextObj as WeatherContextType).forecast = data.forecast;
+        (weatherContextObj as WeatherContextType).weatherToday =
+          data.weatherToday;
+      }
+
+      return data;
+    }
+  );
 
   // On initial load, use localStorage if it exists
   // eslint-disable-next-line qwik/no-use-visible-task
@@ -166,16 +177,7 @@ export default component$(() => {
           onRejected={(weatherResource) => (
             <ErrorMessage message={weatherResource.message} />
           )}
-          onResolved={(weatherResource) => {
-            weatherContextObj.displayLocation = (
-              weatherResource as SuccessResponse
-            ).displayLocation;
-            (weatherContextObj as WeatherContextType).forecast = (
-              weatherResource as SuccessResponse
-            ).forecast;
-            (weatherContextObj as WeatherContextType).weatherToday = (
-              weatherResource as SuccessResponse
-            ).weatherToday;
+          onResolved={() => {
             return <WeatherLayout />;
           }}
           value={weatherResource}
