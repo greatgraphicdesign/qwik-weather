@@ -43,7 +43,7 @@ export interface SuccessResponse {
 export type WeatherResource = SuccessResponse | Error | undefined;
 
 export default component$(() => {
-  const weatherContextObj = useStore({
+  const weatherContextObj: WeatherContextType = useStore({
     displayLocation: '',
     error: '',
     forecast: null,
