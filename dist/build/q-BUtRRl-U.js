@@ -1,1 +1,0 @@
-import{s as e,k as o,F as n}from"./q-CG5bTEZD.js";import"./q-BKunlu9X.js";const x=r=>(r.contexts.forEach(({id:t,value:s})=>{e(t,s)}),o(n,{children:[r.jsx].map(t=>t)},1,"3t_3"));export{x as s_XqRdMYz9jnU};
