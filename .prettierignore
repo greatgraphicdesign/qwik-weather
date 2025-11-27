@@ -1,0 +1,7 @@
+**/adapters
+**/dist
+**/node_modules
+**/public
+**/server
+
+eslint.config.cjs
