@@ -1,1 +1,0 @@
-import{v as o}from"./q-pkfIzfSq.js";import{t as c}from"./q-pkfIzfSq.js";const s=()=>{const[t]=o(),e=localStorage.getItem("weatherLocation");e&&JSON.parse(e).length&&JSON.parse(e)!==t.query?t.query=JSON.parse(e):t.query="Bellingham"};export{c as _hW,s as s_zqpXT8B27s0};
