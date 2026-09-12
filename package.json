@@ -39,7 +39,7 @@
     "prettier": "^3.9.6",
     "typescript": "5.4.5",
     "undici": "^7.29.1",
-    "vite": "^5.4.21",
+    "vite": "^8.3.0",
     "vite-tsconfig-paths": "^4.3.2"
   },
   "dependencies": {
